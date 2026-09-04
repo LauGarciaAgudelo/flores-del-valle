@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Sistema de gestión para la floristería Flores del Valle."
+    >
+
     <title>Flores del Valle | Inicio</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <link
+        rel="stylesheet"
+        href="/css/styles.css"
+        th:href="@{/css/styles.css}"
+    >
 </head>
 
 <body>
@@ -12,7 +23,9 @@
 
     <main class="contenido">
         <section class="presentacion">
-            <span class="etiqueta">Administración centralizada</span>
+            <span class="etiqueta">
+                Administración centralizada
+            </span>
 
             <h1 th:text="${nombreFloristeria}">
                 Flores del Valle
@@ -27,31 +40,138 @@
                 las entregas y la facturación de la floristería.
             </p>
 
-            <a class="boton-principal" th:href="@{/inventario}">
+            <a
+                class="boton-principal"
+                th:href="@{/inventario}"
+            >
                 Consultar inventario
             </a>
+        </section>
+
+        <section class="resumen-general">
+            <article class="dato-resumen">
+                <span>Referencias disponibles</span>
+
+                <strong th:text="${referenciasFlores}">
+                    0
+                </strong>
+
+                <small>
+                    Tipos y variedades registradas
+                </small>
+            </article>
+
+            <article class="dato-resumen dato-alerta">
+                <span>Stock bajo</span>
+
+                <strong th:text="${floresStockBajo}">
+                    0
+                </strong>
+
+                <small>
+                    Referencias con 10 unidades o menos
+                </small>
+            </article>
+
+            <article class="dato-resumen">
+                <span>Total de pedidos</span>
+
+                <strong th:text="${totalPedidos}">
+                    0
+                </strong>
+
+                <small>
+                    Solicitudes registradas
+                </small>
+            </article>
+
+            <article class="dato-resumen dato-pendiente">
+                <span>Pedidos en curso</span>
+
+                <strong th:text="${pedidosEnCurso}">
+                    0
+                </strong>
+
+                <small>
+                    Pedidos pendientes de completar
+                </small>
+            </article>
         </section>
 
         <section class="modulos">
             <article class="tarjeta-modulo">
                 <span>01</span>
+
                 <h3>Inventario</h3>
-                <p>Control de flores, cantidades disponibles y precios.</p>
-                <a th:href="@{/inventario}">Ver inventario</a>
+
+                <p>
+                    Control de flores, cantidades disponibles,
+                    variedades y precios.
+                </p>
+
+                <a th:href="@{/inventario}">
+                    Ver inventario
+                </a>
             </article>
 
             <article class="tarjeta-modulo">
                 <span>02</span>
+
                 <h3>Pedidos</h3>
-                <p>Consulta y seguimiento de las solicitudes de los clientes.</p>
-                <a th:href="@{/pedidos}">Ver pedidos</a>
+
+                <p>
+                    Consulta y seguimiento de las solicitudes
+                    realizadas por los clientes.
+                </p>
+
+                <a th:href="@{/pedidos}">
+                    Ver pedidos
+                </a>
             </article>
 
             <article class="tarjeta-modulo">
                 <span>03</span>
+
                 <h3>Entregas</h3>
-                <p>Programación y seguimiento de las entregas pendientes.</p>
-                <a th:href="@{/entregas}">Ver entregas</a>
+
+                <p>
+                    Programación y seguimiento de las entregas
+                    pendientes de la floristería.
+                </p>
+
+                <a th:href="@{/entregas}">
+                    Ver entregas
+                </a>
+            </article>
+
+            <article class="tarjeta-modulo">
+                <span>04</span>
+
+                <h3>Facturación</h3>
+
+                <p>
+                    Consulta de facturas, pagos y valores asociados
+                    con los pedidos.
+                </p>
+
+                <a th:href="@{/facturacion}">
+                    Ver facturación
+                </a>
+            </article>
+
+            <article class="tarjeta-modulo">
+                <span>05</span>
+
+                <h3>Informes</h3>
+
+                <p>
+                    Indicadores para analizar las ventas, el inventario
+                    y el comportamiento de los pedidos.
+                </p>
+
+                <a th:href="@{/informes}">
+                    Ver informes
+                </a>
             </article>
         </section>
     </main>
