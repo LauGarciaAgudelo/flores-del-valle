@@ -6,7 +6,11 @@
 
     <title>Flores del Valle | Inventario</title>
 
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link
+        rel="stylesheet"
+        href="/css/styles.css"
+        th:href="@{/css/styles.css}"
+    >
 </head>
 
 <body>
@@ -19,18 +23,85 @@
             <h1>Inventario de flores</h1>
 
             <p>
-                Consulta las flores disponibles, sus características
-                y precios.
+                Consulta las flores disponibles, sus variedades,
+                cantidades y precios.
             </p>
         </section>
 
-        <section class="mensaje-modulo">
-            <h2>Módulo de inventario</h2>
+        <section
+            class="tabla-contenedor"
+            th:if="${not #lists.isEmpty(flores)}"
+        >
+            <table class="tabla-inventario">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Color</th>
+                        <th>Variedad</th>
+                        <th>Cantidad</th>
+                        <th>Compra</th>
+                        <th>Venta</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
 
-            <p>
-                En el siguiente avance se presentará aquí la información
-                almacenada en MySQL.
-            </p>
+                <tbody>
+                    <tr th:each="flor : ${flores}">
+                        <td
+                            class="nombre-flor"
+                            th:text="${flor.tipo}"
+                        >
+                            Rosa
+                        </td>
+
+                        <td th:text="${flor.color}">
+                            Rojo
+                        </td>
+
+                        <td th:text="${flor.variedad}">
+                            Freedom
+                        </td>
+
+                        <td th:text="${flor.cantidadDisponible}">
+                            45
+                        </td>
+
+                        <td
+                            th:text="'$' + ${#numbers.formatInteger(flor.precioCompra, 3, 'POINT')}"
+                        >
+                            $2.500
+                        </td>
+
+                        <td
+                            th:text="'$' + ${#numbers.formatInteger(flor.precioVenta, 3, 'POINT')}"
+                        >
+                            $5.000
+                        </td>
+
+                        <td>
+                            <span
+                                class="estado-stock"
+                                th:classappend="${flor.cantidadDisponible <= 10}
+                                    ? ' stock-bajo'
+                                    : ' stock-disponible'"
+                                th:text="${flor.cantidadDisponible <= 10}
+                                    ? 'Stock bajo'
+                                    : 'Disponible'"
+                            >
+                                Disponible
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section
+            class="mensaje-modulo"
+            th:if="${#lists.isEmpty(flores)}"
+        >
+            <h2>No hay flores registradas</h2>
+            <p>El inventario todavía no contiene información.</p>
         </section>
     </main>
 

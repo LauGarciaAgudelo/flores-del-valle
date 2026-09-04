@@ -245,3 +245,65 @@ body {
         padding: 8px 6px;
     }
 }
+
+/* Inventario */
+
+.tabla-contenedor {
+    overflow-x: auto;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+    box-shadow: 0 6px 20px rgba(35, 75, 59, 0.08);
+}
+
+.tabla-inventario {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-inventario th,
+.tabla-inventario td {
+    padding: 16px;
+    border-bottom: 1px solid var(--borde);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabla-inventario th {
+    color: var(--blanco);
+    background-color: var(--verde-oscuro);
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.tabla-inventario tbody tr:hover {
+    background-color: #f4f8f5;
+}
+
+.tabla-inventario tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.nombre-flor {
+    color: var(--verde-oscuro);
+    font-weight: 700;
+}
+
+.estado-stock {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-disponible {
+    color: #22613f;
+    background-color: #dff2e7;
+}
+
+.stock-bajo {
+    color: #9a3d35;
+    background-color: #f8dfdc;
+}
