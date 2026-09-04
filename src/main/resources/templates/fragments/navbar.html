@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav class="navbar" th:fragment="navbar">
+    <div class="navbar-contenido">
+        <a class="marca" th:href="@{/}">
+            <span class="marca-icono">FV</span>
+
+            <span class="marca-texto">
+                <strong>Flores del Valle</strong>
+                <small>Gestión de floristería</small>
+            </span>
+        </a>
+
+        <div class="navbar-enlaces">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/inventario}">Inventario</a>
+            <a th:href="@{/pedidos}">Pedidos</a>
+            <a th:href="@{/entregas}">Entregas</a>
+            <a th:href="@{/facturacion}">Facturación</a>
+            <a th:href="@{/informes}">Informes</a>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+:root {
+    --verde-oscuro: #234b3b;
+    --verde-medio: #4f8068;
+    --verde-claro: #dfece4;
+    --rosa-suave: #f5e5e4;
+    --dorado: #c58f52;
+    --crema: #faf8f3;
+    --texto: #3e4943;
+    --blanco: #ffffff;
+    --borde: #dce5df;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--texto);
+    background-color: var(--crema);
+}
+
+.navbar {
+    border-bottom: 4px solid var(--dorado);
+    background-color: var(--verde-oscuro);
+    box-shadow: 0 3px 12px rgba(35, 75, 59, 0.22);
+}
+
+.navbar-contenido {
+    width: min(1180px, calc(100% - 40px));
+    min-height: 82px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--blanco);
+    text-decoration: none;
+}
+
+.marca-icono {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% 50% 45% 55%;
+    color: var(--blanco);
+    background-color: var(--dorado);
+    font-weight: 800;
+}
+
+.marca-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.marca-texto strong {
+    font-size: 20px;
+}
+
+.marca-texto small {
+    margin-top: 3px;
+    color: #cfe0d7;
+}
+
+.navbar-enlaces {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.navbar-enlaces a {
+    padding: 10px;
+    border-radius: 5px;
+    color: #eef6f1;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.navbar-enlaces a:hover {
+    background-color: var(--verde-medio);
+}
+
+.contenido {
+    width: min(1100px, calc(100% - 40px));
+    min-height: calc(100vh - 165px);
+    margin: 42px auto;
+}
+
+.presentacion {
+    padding: 55px;
+    border-radius: 16px;
+    background:
+        linear-gradient(120deg, var(--verde-claro), var(--rosa-suave));
+    box-shadow: 0 8px 24px rgba(35, 75, 59, 0.1);
+}
+
+.etiqueta {
+    color: var(--dorado);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.presentacion h1,
+.encabezado-pagina h1 {
+    margin: 12px 0;
+    color: var(--verde-oscuro);
+}
+
+.presentacion h1 {
+    font-size: 47px;
+}
+
+.presentacion h2 {
+    max-width: 650px;
+    margin: 0 0 18px;
+    color: var(--verde-medio);
+    font-size: 27px;
+}
+
+.presentacion p,
+.encabezado-pagina p {
+    max-width: 720px;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.boton-principal {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 14px 20px;
+    border-radius: 7px;
+    color: var(--blanco);
+    background-color: var(--verde-oscuro);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.boton-principal:hover {
+    background-color: var(--verde-medio);
+}
+
+.modulos {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.tarjeta-modulo,
+.mensaje-modulo {
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+    box-shadow: 0 5px 18px rgba(35, 75, 59, 0.07);
+}
+
+.tarjeta-modulo {
+    padding: 28px;
+}
+
+.tarjeta-modulo span {
+    color: var(--dorado);
+    font-weight: 800;
+}
+
+.tarjeta-modulo h3,
+.mensaje-modulo h2 {
+    color: var(--verde-oscuro);
+}
+
+.tarjeta-modulo p,
+.mensaje-modulo p {
+    line-height: 1.6;
+}
+
+.tarjeta-modulo a {
+    color: var(--verde-medio);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.encabezado-pagina {
+    margin-bottom: 28px;
+}
+
+.encabezado-pagina h1 {
+    font-size: 38px;
+}
+
+.mensaje-modulo {
+    padding: 38px;
+    border-left: 5px solid var(--dorado);
+}
+
+.pie-pagina {
+    padding: 20px;
+    border-top: 4px solid var(--dorado);
+    color: #d7e6de;
+    text-align: center;
+    background-color: var(--verde-oscuro);
+}
+
+.pie-pagina p {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .navbar-contenido {
+        padding: 18px 0;
+        flex-direction: column;
+    }
+
+    .navbar-enlaces {
+        justify-content: center;
+    }
+
+    .modulos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .presentacion {
+        padding: 30px;
+    }
+
+    .presentacion h1 {
+        font-size: 34px;
+    }
+
+    .navbar-enlaces a {
+        padding: 8px 6px;
+    }
+}

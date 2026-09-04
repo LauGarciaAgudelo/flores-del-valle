@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores del Valle | Entregas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="contenido">
+        <section class="encabezado-pagina">
+            <span class="etiqueta">Programación de rutas</span>
+            <h1>Gestión de entregas</h1>
+            <p>Consulta las entregas programadas y su estado.</p>
+        </section>
+
+        <section class="mensaje-modulo">
+            <h2>Módulo de entregas</h2>
+            <p>Este espacio permitirá realizar seguimiento a las entregas.</p>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Flores del Valle - Gestión de floristería</p>
+    </footer>
+</body>
+</html>
