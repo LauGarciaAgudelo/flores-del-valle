@@ -3,6 +3,8 @@ package com.floresdelvalle.floresdelvalle.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,15 +22,12 @@ public class Pedido {
     private Long id;
 
     private String nombreCliente;
-
     private String direccion;
-
     private String contacto;
-
     private String tipoArreglo;
-
     private String ocasion;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fechaEntrega;
 
     private Integer presupuesto;
@@ -61,6 +60,10 @@ public class Pedido {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombreCliente() {
@@ -128,7 +131,13 @@ public class Pedido {
     }
 
     public String getFechaFormateada() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if (fechaEntrega == null) {
+            return "";
+        }
+
+        DateTimeFormatter formato =
+                DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         return fechaEntrega.format(formato);
     }
 }
