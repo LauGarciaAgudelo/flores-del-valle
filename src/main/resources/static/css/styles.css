@@ -307,3 +307,284 @@ body {
     color: #9a3d35;
     background-color: #f8dfdc;
 }
+
+/* Pedidos */
+
+.resumen-pedidos {
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.indicador {
+    padding: 20px;
+    border: 1px solid var(--borde);
+    border-top: 4px solid var(--verde-oscuro);
+    border-radius: 10px;
+    background-color: var(--blanco);
+    box-shadow: 0 4px 14px rgba(35, 75, 59, 0.07);
+}
+
+.indicador span {
+    display: block;
+    color: #69766f;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.indicador strong {
+    display: block;
+    margin-top: 8px;
+    color: var(--verde-oscuro);
+    font-size: 30px;
+}
+
+.indicador-curso {
+    border-top-color: #cf8b35;
+}
+
+.indicador-completado {
+    border-top-color: #477da3;
+}
+
+.indicador-entregado {
+    border-top-color: #4d8a63;
+}
+
+.tabla-pedidos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-pedidos th,
+.tabla-pedidos td {
+    padding: 15px;
+    border-bottom: 1px solid var(--borde);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabla-pedidos th {
+    color: var(--blanco);
+    background-color: var(--verde-oscuro);
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.tabla-pedidos tbody tr:hover {
+    background-color: #f4f8f5;
+}
+
+.tabla-pedidos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-pedidos td strong,
+.tabla-pedidos td small {
+    display: block;
+}
+
+.tabla-pedidos td strong {
+    color: var(--verde-oscuro);
+}
+
+.tabla-pedidos td small {
+    max-width: 180px;
+    margin-top: 5px;
+    overflow: hidden;
+    color: #78837d;
+    text-overflow: ellipsis;
+}
+
+.estado-pedido {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.estado-en_curso {
+    color: #8a561b;
+    background-color: #f9ead5;
+}
+
+.estado-completado {
+    color: #285b7d;
+    background-color: #dcecf6;
+}
+
+.estado-entregado {
+    color: #286040;
+    background-color: #dff1e5;
+}
+
+@media (max-width: 900px) {
+    .resumen-pedidos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .resumen-pedidos {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Indicadores del inicio */
+
+.resumen-general {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.dato-resumen {
+    padding: 22px;
+    border: 1px solid var(--borde);
+    border-top: 4px solid var(--verde-medio);
+    border-radius: 11px;
+    background-color: var(--blanco);
+    box-shadow: 0 5px 16px rgba(35, 75, 59, 0.07);
+}
+
+.dato-resumen span {
+    display: block;
+    color: #68766f;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.dato-resumen strong {
+    display: block;
+    margin: 8px 0 5px;
+    color: var(--verde-oscuro);
+    font-size: 32px;
+}
+
+.dato-resumen small {
+    color: #78847e;
+    line-height: 1.4;
+}
+
+.dato-alerta {
+    border-top-color: #c96e5d;
+}
+
+.dato-alerta strong {
+    color: #a6493c;
+}
+
+.dato-pendiente {
+    border-top-color: var(--dorado);
+}
+
+@media (max-width: 900px) {
+    .resumen-general {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .resumen-general {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Formulario de pedidos */
+
+.acciones-pagina {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.formulario-contenedor {
+    max-width: 850px;
+    padding: 28px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+    box-shadow: 0 6px 20px rgba(35, 75, 59, 0.08);
+}
+
+.formulario-campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-ancho {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    color: var(--verde-oscuro);
+    font-weight: 700;
+}
+
+.campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font: inherit;
+}
+
+.campo input:focus {
+    outline: 2px solid var(--verde-medio);
+    outline-offset: 1px;
+}
+
+.error-campo {
+    color: #a6493c;
+}
+
+.acciones-formulario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.boton-secundario {
+    display: inline-block;
+    padding: 12px 18px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--verde-oscuro);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .formulario-contenedor {
+        padding: 18px;
+    }
+
+    .formulario-campos {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-ancho {
+        grid-column: auto;
+    }
+
+    .acciones-formulario {
+        flex-wrap: wrap;
+    }
+}
