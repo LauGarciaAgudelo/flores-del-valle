@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flores del Valle | Editar pedido</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/styles.css"
+        th:href="@{/css/styles.css}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/pedido-formulario.css"
+        th:href="@{/css/pedido-formulario.css}"
+    >
+</head>
+
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="contenido">
+        <section class="encabezado-pagina">
+            <span class="etiqueta">Atención al cliente</span>
+            <h1>Editar pedido</h1>
+
+            <p>
+                Actualiza los datos del cliente, el arreglo
+                y la fecha de entrega.
+            </p>
+        </section>
+
+        <section class="formulario-contenedor">
+            <form
+                id="formulario-edicion"
+                class="formulario-pedido"
+                th:object="${formulario}"
+                th:attr="data-url=@{/api/pedidos/{id}(id=${pedidoId})}"
+            >
+                <div class="formulario-campos">
+                    <div class="campo">
+                        <label for="nombreCliente">
+                            Nombre y apellido
+                        </label>
+
+                        <input
+                            id="nombreCliente"
+                            type="text"
+                            th:field="*{nombreCliente}"
+                            maxlength="255"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="contacto">
+                            Número de celular
+                        </label>
+
+                        <input
+                            id="contacto"
+                            type="tel"
+                            th:field="*{contacto}"
+                            maxlength="10"
+                            pattern="3[0-9]{9}"
+                            autocomplete="tel"
+                            required
+                        >
+
+                        <small class="ayuda-campo">
+                            Diez dígitos, sin espacios.
+                        </small>
+                    </div>
+
+                    <div class="campo campo-ancho">
+                        <label for="direccion">
+                            Dirección de entrega
+                        </label>
+
+                        <input
+                            id="direccion"
+                            type="text"
+                            th:field="*{direccion}"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="arregloId">
+                            Tipo de arreglo
+                        </label>
+
+                        <select
+                            id="arregloId"
+                            th:field="*{arregloId}"
+                            required
+                        >
+                            <option value="">
+                                Selecciona un arreglo
+                            </option>
+
+                            <option
+                                th:each="arreglo : ${arreglos}"
+                                th:value="${arreglo.id}"
+                                th:text="${arreglo.nombre}"
+                                th:attr="
+                                    data-basico=${arreglo.precioBasico},
+                                    data-especial=${arreglo.precioEspecial},
+                                    data-premium=${arreglo.precioPremium}
+                                "
+                            >
+                                Ramo de rosas
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="presupuesto">
+                            Opción de precio
+                        </label>
+
+                        <select
+                            id="presupuesto"
+                            th:field="*{presupuesto}"
+                            th:attr="data-precio-seleccionado=*{presupuesto}"
+                            required
+                        >
+                            <option value="">
+                                Primero selecciona un arreglo
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="ocasion">
+                            Ocasión
+                        </label>
+
+                        <input
+                            id="ocasion"
+                            type="text"
+                            th:field="*{ocasion}"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="fechaEntrega">
+                            Fecha de entrega
+                        </label>
+
+                        <input
+                            id="fechaEntrega"
+                            type="date"
+                            th:field="*{fechaEntrega}"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <p
+                    id="error-formulario"
+                    class="error-campo"
+                    role="alert"
+                    hidden
+                ></p>
+
+                <div class="acciones-formulario">
+                    <a
+                        class="boton-secundario"
+                        th:href="@{/pedidos}"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                        id="boton-guardar"
+                        class="boton-principal"
+                        type="submit"
+                    >
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Flores del Valle - Gestión de floristería</p>
+    </footer>
+
+    <script>
+        const arregloSelector = document.getElementById("arregloId");
+        const precioSelector = document.getElementById("presupuesto");
+        const formulario = document.getElementById("formulario-edicion");
+        const errorFormulario = document.getElementById("error-formulario");
+        const botonGuardar = document.getElementById("boton-guardar");
+
+        const precioInicial =
+            precioSelector.dataset.precioSeleccionado || "";
+
+        const formatoPesos = new Intl.NumberFormat("es-CO", {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+        });
+
+        function agregarOpcionPrecio(valor, nombre) {
+            const opcion = document.createElement("option");
+            opcion.value = valor;
+            opcion.textContent =
+                `${nombre} — ${formatoPesos.format(Number(valor))}`;
+
+            precioSelector.appendChild(opcion);
+        }
+
+        function actualizarPrecios(precioAConservar = "") {
+            const arreglo =
+                arregloSelector.options[arregloSelector.selectedIndex];
+
+            precioSelector.replaceChildren();
+
+            const indicacion = document.createElement("option");
+            indicacion.value = "";
+            indicacion.textContent = arregloSelector.value
+                ? "Selecciona una opción de precio"
+                : "Primero selecciona un arreglo";
+
+            precioSelector.appendChild(indicacion);
+
+            if (!arregloSelector.value) {
+                precioSelector.disabled = true;
+                return;
+            }
+
+            agregarOpcionPrecio(arreglo.dataset.basico, "Básico");
+            agregarOpcionPrecio(arreglo.dataset.especial, "Especial");
+            agregarOpcionPrecio(arreglo.dataset.premium, "Premium");
+
+            precioSelector.disabled = false;
+
+            const existePrecio = Array.from(precioSelector.options)
+                .some(opcion => opcion.value === precioAConservar);
+
+            if (existePrecio) {
+                precioSelector.value = precioAConservar;
+            }
+        }
+
+        arregloSelector.addEventListener("change", () => {
+            actualizarPrecios();
+        });
+
+        actualizarPrecios(precioInicial);
+
+        formulario.addEventListener("submit", async (evento) => {
+            evento.preventDefault();
+
+            errorFormulario.hidden = true;
+            botonGuardar.disabled = true;
+
+            const datos = {
+                nombreCliente:
+                    document.getElementById("nombreCliente").value,
+                contacto:
+                    document.getElementById("contacto").value,
+                direccion:
+                    document.getElementById("direccion").value,
+                arregloId:
+                    Number(arregloSelector.value),
+                presupuesto:
+                    Number(precioSelector.value),
+                ocasion:
+                    document.getElementById("ocasion").value,
+                fechaEntrega:
+                    document.getElementById("fechaEntrega").value
+            };
+
+            try {
+                const respuesta = await fetch(formulario.dataset.url, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(datos)
+                });
+
+                const resultado = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    throw new Error(
+                        resultado.error
+                        || "No se pudo actualizar el pedido."
+                    );
+                }
+
+                window.location.assign(
+                    document.querySelector(
+                        'a.boton-secundario'
+                    ).href
+                );
+            } catch (error) {
+                errorFormulario.textContent = error.message;
+                errorFormulario.hidden = false;
+                botonGuardar.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

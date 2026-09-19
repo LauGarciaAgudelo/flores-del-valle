@@ -11,6 +11,12 @@
         href="/css/styles.css"
         th:href="@{/css/styles.css}"
     >
+
+    <link
+        rel="stylesheet"
+        href="/css/pedido-acciones.css"
+        th:href="@{/css/pedido-acciones.css}"
+    >
 </head>
 
 <body>
@@ -27,6 +33,12 @@
                 y el estado actual de cada solicitud.
             </p>
         </section>
+
+        <div class="acciones-pagina">
+            <a class="boton-principal" th:href="@{/pedidos/nuevo}">
+                + Nuevo pedido
+            </a>
+        </div>
 
         <section class="resumen-pedidos">
             <article class="indicador">
@@ -64,6 +76,7 @@
                         <th>Entrega</th>
                         <th>Presupuesto</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -109,6 +122,15 @@
                             >
                                 En curso
                             </span>
+                        </td>
+
+                        <td>
+                            <a
+                                class="boton-editar"
+                                th:href="@{/pedidos/{id}/editar(id=${pedido.id})}"
+                            >
+                                Editar
+                            </a>
                         </td>
                     </tr>
                 </tbody>

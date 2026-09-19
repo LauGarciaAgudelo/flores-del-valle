@@ -1,0 +1,22 @@
+.acciones-pagina {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.boton-editar {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid var(--verde-oscuro);
+    border-radius: 7px;
+    color: var(--verde-oscuro);
+    background-color: var(--blanco);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.boton-editar:hover {
+    color: var(--blanco);
+    background-color: var(--verde-oscuro);
+}
