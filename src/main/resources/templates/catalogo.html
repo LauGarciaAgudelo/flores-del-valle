@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Catálogo de arreglos florales de Flores del Valle."
+    >
+
+    <title>Flores del Valle | Catálogo</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/styles.css"
+        th:href="@{/css/styles.css}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/catalogo.css"
+        th:href="@{/css/catalogo.css}"
+    >
+</head>
+
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="contenido">
+        <section class="encabezado-pagina catalogo-encabezado">
+            <span class="etiqueta">
+                Flores para cada ocasión
+            </span>
+
+            <h1>Catálogo de arreglos</h1>
+
+            <p>
+                Explora los arreglos disponibles y selecciona la
+                presentación que mejor se adapte a tu ocasión y
+                presupuesto.
+            </p>
+        </section>
+
+        <section
+            class="catalogo-grid"
+            th:if="${not #lists.isEmpty(catalogo)}"
+        >
+            <article
+                class="catalogo-card"
+                th:each="item : ${catalogo}"
+            >
+                <div class="catalogo-imagen-contenedor">
+                    <img
+                        class="catalogo-imagen"
+                        th:src="@{${item.imagen}}"
+                        th:alt="'Fotografía de ' + ${item.nombre}"
+                        loading="lazy"
+                    >
+
+                    <span class="catalogo-disponible">
+                        Disponible
+                    </span>
+                </div>
+
+                <div class="catalogo-contenido">
+                    <h2 th:text="${item.nombre}">
+                        Nombre del arreglo
+                    </h2>
+
+                    <p
+                        class="catalogo-descripcion"
+                        th:text="${item.descripcion}"
+                    >
+                        Descripción del arreglo floral.
+                    </p>
+
+                    <div class="catalogo-precios">
+                        <div class="precio-opcion">
+                            <span>Básico</span>
+
+                            <strong
+                                th:text="'$' + ${#numbers.formatInteger(
+                                    item.precioBasico,
+                                    3,
+                                    'POINT'
+                                )}"
+                            >
+                                $75.000
+                            </strong>
+                        </div>
+
+                        <div class="precio-opcion">
+                            <span>Especial</span>
+
+                            <strong
+                                th:text="'$' + ${#numbers.formatInteger(
+                                    item.precioEspecial,
+                                    3,
+                                    'POINT'
+                                )}"
+                            >
+                                $95.000
+                            </strong>
+                        </div>
+
+                        <div class="precio-opcion">
+                            <span>Premium</span>
+
+                            <strong
+                                th:text="'$' + ${#numbers.formatInteger(
+                                    item.precioPremium,
+                                    3,
+                                    'POINT'
+                                )}"
+                            >
+                                $125.000
+                            </strong>
+                        </div>
+                    </div>
+
+                    <a
+                        class="boton-solicitar"
+                        th:href="@{/pedidos/nuevo(
+                            arregloId=${item.id}
+                        )}"
+                    >
+                        Solicitar arreglo
+                    </a>
+                </div>
+            </article>
+        </section>
+
+        <section
+            class="mensaje-modulo"
+            th:if="${#lists.isEmpty(catalogo)}"
+        >
+            <h2>No hay arreglos disponibles</h2>
+
+            <p>
+                El catálogo todavía no contiene arreglos florales.
+            </p>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>
+            Flores del Valle - Gestión de floristería
+        </p>
+    </footer>
+</body>
+</html>
