@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.floresdelvalle.floresdelvalle.model.Arreglo;
 import com.floresdelvalle.floresdelvalle.model.EstadoPedido;
@@ -38,29 +39,55 @@ public class PedidoController {
             pedidoRepository.findAllByOrderByFechaEntregaAsc()
         );
 
-        model.addAttribute("totalPedidos", pedidoRepository.count());
+        model.addAttribute(
+            "totalPedidos",
+            pedidoRepository.count()
+        );
 
         model.addAttribute(
             "pedidosEnCurso",
-            pedidoRepository.countByEstado(EstadoPedido.EN_CURSO)
+            pedidoRepository.countByEstado(
+                EstadoPedido.EN_CURSO
+            )
         );
 
         model.addAttribute(
             "pedidosCompletados",
-            pedidoRepository.countByEstado(EstadoPedido.COMPLETADO)
+            pedidoRepository.countByEstado(
+                EstadoPedido.COMPLETADO
+            )
         );
 
         model.addAttribute(
             "pedidosEntregados",
-            pedidoRepository.countByEstado(EstadoPedido.ENTREGADO)
+            pedidoRepository.countByEstado(
+                EstadoPedido.ENTREGADO
+            )
         );
 
         return "pedidos";
     }
 
     @GetMapping("/pedidos/nuevo")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("formulario", new PedidoFormulario());
+    public String mostrarFormulario(
+            @RequestParam(
+                required = false
+            ) Long arregloId,
+            Model model
+    ) {
+        PedidoFormulario formulario =
+            new PedidoFormulario();
+
+        if (arregloId != null
+                && arregloRepository.existsById(arregloId)) {
+            formulario.setArregloId(arregloId);
+        }
+
+        model.addAttribute(
+            "formulario",
+            formulario
+        );
+
         model.addAttribute(
             "arreglos",
             arregloRepository.findAllByOrderByNombreAsc()
@@ -71,7 +98,8 @@ public class PedidoController {
 
     @PostMapping("/pedidos")
     public String crearPedido(
-            @ModelAttribute("formulario") PedidoFormulario formulario,
+            @ModelAttribute("formulario")
+            PedidoFormulario formulario,
             BindingResult resultado,
             Model model
     ) {
@@ -134,8 +162,14 @@ public class PedidoController {
             PedidoFormulario formulario,
             BindingResult resultado
     ) {
-        if (!StringUtils.hasText(formulario.getNombreCliente())
-                || formulario.getNombreCliente().trim().split("\\s+").length < 2) {
+        if (!StringUtils.hasText(
+                formulario.getNombreCliente()
+            )
+                || formulario
+                    .getNombreCliente()
+                    .trim()
+                    .split("\\s+")
+                    .length < 2) {
             resultado.rejectValue(
                 "nombreCliente",
                 "nombre.invalido",
@@ -143,7 +177,9 @@ public class PedidoController {
             );
         }
 
-        if (!StringUtils.hasText(formulario.getDireccion())) {
+        if (!StringUtils.hasText(
+                formulario.getDireccion()
+            )) {
             resultado.rejectValue(
                 "direccion",
                 "campo.obligatorio",
@@ -151,12 +187,18 @@ public class PedidoController {
             );
         }
 
-        if (!StringUtils.hasText(formulario.getContacto())
-                || !formulario.getContacto().trim().matches("3[0-9]{9}")) {
+        if (!StringUtils.hasText(
+                formulario.getContacto()
+            )
+                || !formulario
+                    .getContacto()
+                    .trim()
+                    .matches("3[0-9]{9}")) {
             resultado.rejectValue(
                 "contacto",
                 "celular.invalido",
-                "Ingresa un celular colombiano de 10 dígitos, sin espacios."
+                "Ingresa un celular colombiano "
+                    + "de 10 dígitos, sin espacios."
             );
         }
 
@@ -168,7 +210,9 @@ public class PedidoController {
             );
         }
 
-        if (!StringUtils.hasText(formulario.getOcasion())) {
+        if (!StringUtils.hasText(
+                formulario.getOcasion()
+            )) {
             resultado.rejectValue(
                 "ocasion",
                 "campo.obligatorio",
