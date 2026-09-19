@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flores del Valle | Nuevo pedido</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/styles.css"
+        th:href="@{/css/styles.css}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/css/pedido-formulario.css"
+        th:href="@{/css/pedido-formulario.css}"
+    >
+</head>
+
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="contenido">
+        <section class="encabezado-pagina">
+            <span class="etiqueta">Atención al cliente</span>
+            <h1>Registrar pedido</h1>
+
+            <p>
+                Selecciona un arreglo del catálogo y una de sus
+                opciones de precio.
+            </p>
+        </section>
+
+        <section class="formulario-contenedor">
+            <form
+                class="formulario-pedido"
+                th:action="@{/pedidos}"
+                th:object="${formulario}"
+                method="post"
+            >
+                <div class="formulario-campos">
+                    <div class="campo">
+                        <label for="nombreCliente">
+                            Nombre y apellido
+                        </label>
+
+                        <input
+                            id="nombreCliente"
+                            type="text"
+                            th:field="*{nombreCliente}"
+                            maxlength="255"
+                            placeholder="Ejemplo: Laura Martínez"
+                            autocomplete="name"
+                            required
+                        >
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('nombreCliente')}"
+                            th:errors="*{nombreCliente}"
+                        ></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="contacto">
+                            Número de celular
+                        </label>
+
+                        <input
+                            id="contacto"
+                            type="tel"
+                            th:field="*{contacto}"
+                            maxlength="10"
+                            pattern="3[0-9]{9}"
+                            placeholder="Ejemplo: 3004567890"
+                            autocomplete="tel"
+                            required
+                        >
+
+                        <small class="ayuda-campo">
+                            Celular colombiano de 10 dígitos, sin espacios.
+                        </small>
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('contacto')}"
+                            th:errors="*{contacto}"
+                        ></small>
+                    </div>
+
+                    <div class="campo campo-ancho">
+                        <label for="direccion">
+                            Dirección de entrega
+                        </label>
+
+                        <input
+                            id="direccion"
+                            type="text"
+                            th:field="*{direccion}"
+                            maxlength="255"
+                            autocomplete="street-address"
+                            required
+                        >
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('direccion')}"
+                            th:errors="*{direccion}"
+                        ></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="arregloId">
+                            Tipo de arreglo
+                        </label>
+
+                        <select
+                            id="arregloId"
+                            th:field="*{arregloId}"
+                            required
+                        >
+                            <option value="">
+                                Selecciona un arreglo
+                            </option>
+
+                            <option
+                                th:each="arreglo : ${arreglos}"
+                                th:value="${arreglo.id}"
+                                th:text="${arreglo.nombre}"
+                                th:attr="
+                                    data-basico=${arreglo.precioBasico},
+                                    data-especial=${arreglo.precioEspecial},
+                                    data-premium=${arreglo.precioPremium}
+                                "
+                            >
+                                Ramo de rosas
+                            </option>
+                        </select>
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('arregloId')}"
+                            th:errors="*{arregloId}"
+                        ></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="presupuesto">
+                            Opción de precio
+                        </label>
+
+                        <select
+                            id="presupuesto"
+                            th:field="*{presupuesto}"
+                            th:attr="data-precio-seleccionado=*{presupuesto}"
+                            required
+                        >
+                            <option value="">
+                                Primero selecciona un arreglo
+                            </option>
+                        </select>
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('presupuesto')}"
+                            th:errors="*{presupuesto}"
+                        ></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="ocasion">
+                            Ocasión
+                        </label>
+
+                        <input
+                            id="ocasion"
+                            type="text"
+                            th:field="*{ocasion}"
+                            maxlength="255"
+                            placeholder="Ejemplo: Cumpleaños"
+                            required
+                        >
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('ocasion')}"
+                            th:errors="*{ocasion}"
+                        ></small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="fechaEntrega">
+                            Fecha de entrega
+                        </label>
+
+                        <input
+                            id="fechaEntrega"
+                            type="date"
+                            th:field="*{fechaEntrega}"
+                            required
+                        >
+
+                        <small
+                            class="error-campo"
+                            th:if="${#fields.hasErrors('fechaEntrega')}"
+                            th:errors="*{fechaEntrega}"
+                        ></small>
+                    </div>
+                </div>
+
+                <div class="acciones-formulario">
+                    <a
+                        class="boton-secundario"
+                        th:href="@{/pedidos}"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button class="boton-principal" type="submit">
+                        Guardar pedido
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Flores del Valle - Gestión de floristería</p>
+    </footer>
+
+    <script>
+        const arregloSelector = document.getElementById("arregloId");
+        const precioSelector = document.getElementById("presupuesto");
+
+        const precioInicial =
+            precioSelector.dataset.precioSeleccionado || "";
+
+        const formatoPesos = new Intl.NumberFormat("es-CO", {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+        });
+
+        function agregarOpcion(valor, nombre) {
+            const opcion = document.createElement("option");
+            opcion.value = valor;
+            opcion.textContent =
+                `${nombre} — ${formatoPesos.format(Number(valor))}`;
+
+            precioSelector.appendChild(opcion);
+        }
+
+        function actualizarPrecios(precioAConservar = "") {
+            const arreglo =
+                arregloSelector.options[arregloSelector.selectedIndex];
+
+            precioSelector.replaceChildren();
+
+            const indicacion = document.createElement("option");
+            indicacion.value = "";
+            indicacion.textContent = arregloSelector.value
+                ? "Selecciona una opción de precio"
+                : "Primero selecciona un arreglo";
+
+            precioSelector.appendChild(indicacion);
+
+            if (!arregloSelector.value) {
+                precioSelector.disabled = true;
+                return;
+            }
+
+            agregarOpcion(arreglo.dataset.basico, "Básico");
+            agregarOpcion(arreglo.dataset.especial, "Especial");
+            agregarOpcion(arreglo.dataset.premium, "Premium");
+
+            precioSelector.disabled = false;
+
+            const precioDisponible = Array.from(precioSelector.options)
+                .some(opcion => opcion.value === precioAConservar);
+
+            if (precioDisponible) {
+                precioSelector.value = precioAConservar;
+            }
+        }
+
+        arregloSelector.addEventListener("change", () => {
+            actualizarPrecios();
+        });
+
+        actualizarPrecios(precioInicial);
+    </script>
+</body>
+</html>

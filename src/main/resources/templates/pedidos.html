@@ -2,7 +2,11 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Flores del Valle | Pedidos</title>
 
@@ -24,41 +28,65 @@
 
     <main class="contenido">
         <section class="encabezado-pagina">
-            <span class="etiqueta">Atención al cliente</span>
+            <span class="etiqueta">
+                Atención al cliente
+            </span>
 
             <h1>Gestión de pedidos</h1>
 
             <p>
-                Consulta los pedidos recibidos, sus fechas de entrega
-                y el estado actual de cada solicitud.
+                Consulta, registra, actualiza y elimina los pedidos
+                realizados por los clientes.
             </p>
         </section>
 
         <div class="acciones-pagina">
-            <a class="boton-principal" th:href="@{/pedidos/nuevo}">
+            <a
+                class="boton-principal"
+                th:href="@{/pedidos/nuevo}"
+            >
                 + Nuevo pedido
             </a>
         </div>
 
+        <div
+            id="mensaje-operacion"
+            class="mensaje-operacion"
+            role="status"
+            hidden
+        ></div>
+
         <section class="resumen-pedidos">
             <article class="indicador">
                 <span>Total</span>
-                <strong th:text="${totalPedidos}">0</strong>
+
+                <strong th:text="${totalPedidos}">
+                    0
+                </strong>
             </article>
 
             <article class="indicador indicador-curso">
                 <span>En curso</span>
-                <strong th:text="${pedidosEnCurso}">0</strong>
+
+                <strong th:text="${pedidosEnCurso}">
+                    0
+                </strong>
             </article>
 
             <article class="indicador indicador-completado">
                 <span>Completados</span>
-                <strong th:text="${pedidosCompletados}">0</strong>
+
+                <strong th:text="${pedidosCompletados}">
+                    0
+                </strong>
             </article>
 
             <article class="indicador indicador-entregado">
                 <span>Entregados</span>
-                <strong th:text="${pedidosEntregados}">0</strong>
+
+                <strong th:text="${pedidosEntregados}">
+                    0
+                </strong>
             </article>
         </section>
 
@@ -83,8 +111,10 @@
                 <tbody>
                     <tr th:each="pedido : ${pedidos}">
                         <td>
-                            <strong th:text="${pedido.nombreCliente}">
-                                Nombre
+                            <strong
+                                th:text="${pedido.nombreCliente}"
+                            >
+                                Nombre del cliente
                             </strong>
 
                             <small th:text="${pedido.direccion}">
@@ -93,7 +123,7 @@
                         </td>
 
                         <td th:text="${pedido.contacto}">
-                            Contacto
+                            3000000000
                         </td>
 
                         <td th:text="${pedido.tipoArreglo}">
@@ -109,7 +139,11 @@
                         </td>
 
                         <td
-                            th:text="'$' + ${#numbers.formatInteger(pedido.presupuesto, 3, 'POINT')}"
+                            th:text="'$' + ${#numbers.formatInteger(
+                                pedido.presupuesto,
+                                3,
+                                'POINT'
+                            )}"
                         >
                             $95.000
                         </td>
@@ -117,20 +151,71 @@
                         <td>
                             <span
                                 class="estado-pedido"
-                                th:classappend="${'estado-' + #strings.toLowerCase(pedido.estado.name())}"
+                                th:classappend="${'estado-' +
+                                    #strings.toLowerCase(
+                                        pedido.estado.name()
+                                    )}"
                                 th:text="${pedido.estado.descripcion}"
                             >
                                 En curso
                             </span>
+
+                            <div class="cambio-estado">
+                                <select
+                                    class="selector-estado"
+                                    th:id="'estado-' + ${pedido.id}"
+                                    th:attr="
+                                        aria-label='Cambiar estado del pedido',
+                                        data-url=@{/api/pedidos/{id}/estado(
+                                            id=${pedido.id}
+                                        )}
+                                    "
+                                >
+                                    <option
+                                        th:each="estadoDisponible :
+                                            ${T(com.floresdelvalle.floresdelvalle.model.EstadoPedido).values()}"
+                                        th:value="${estadoDisponible.name()}"
+                                        th:text="${estadoDisponible.descripcion}"
+                                        th:selected="${estadoDisponible ==
+                                            pedido.estado}"
+                                    >
+                                        En curso
+                                    </option>
+                                </select>
+
+                                <button
+                                    class="boton-estado"
+                                    type="button"
+                                >
+                                    Actualizar
+                                </button>
+                            </div>
                         </td>
 
                         <td>
-                            <a
-                                class="boton-editar"
-                                th:href="@{/pedidos/{id}/editar(id=${pedido.id})}"
-                            >
-                                Editar
-                            </a>
+                            <div class="acciones-fila">
+                                <a
+                                    class="boton-editar"
+                                    th:href="@{/pedidos/{id}/editar(
+                                        id=${pedido.id}
+                                    )}"
+                                >
+                                    Editar
+                                </a>
+
+                                <button
+                                    class="boton-eliminar"
+                                    type="button"
+                                    th:attr="
+                                        data-url=@{/api/pedidos/{id}(
+                                            id=${pedido.id}
+                                        )},
+                                        data-cliente=${pedido.nombreCliente}
+                                    "
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -142,12 +227,148 @@
             th:if="${#lists.isEmpty(pedidos)}"
         >
             <h2>No hay pedidos registrados</h2>
-            <p>La floristería todavía no tiene pedidos disponibles.</p>
+
+            <p>
+                La floristería todavía no tiene pedidos disponibles.
+            </p>
         </section>
     </main>
 
     <footer class="pie-pagina">
-        <p>Flores del Valle - Gestión de floristería</p>
+        <p>
+            Flores del Valle - Gestión de floristería
+        </p>
     </footer>
+
+    <script>
+        const mensajeOperacion =
+            document.getElementById("mensaje-operacion");
+
+        function mostrarMensaje(texto, tipo) {
+            mensajeOperacion.textContent = texto;
+
+            mensajeOperacion.className =
+                `mensaje-operacion mensaje-${tipo}`;
+
+            mensajeOperacion.hidden = false;
+        }
+
+        async function leerRespuesta(respuesta) {
+            const tipoContenido =
+                respuesta.headers.get("content-type") || "";
+
+            if (tipoContenido.includes("application/json")) {
+                return respuesta.json();
+            }
+
+            return {};
+        }
+
+        document.querySelectorAll(".boton-estado")
+            .forEach(boton => {
+                boton.addEventListener("click", async () => {
+                    const selector =
+                        boton.previousElementSibling;
+
+                    boton.disabled = true;
+                    mensajeOperacion.hidden = true;
+
+                    try {
+                        const respuesta = await fetch(
+                            selector.dataset.url,
+                            {
+                                method: "PATCH",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+                                body: JSON.stringify({
+                                    estado: selector.value
+                                })
+                            }
+                        );
+
+                        const resultado =
+                            await leerRespuesta(respuesta);
+
+                        if (!respuesta.ok) {
+                            throw new Error(
+                                resultado.error
+                                || "No se pudo actualizar el estado."
+                            );
+                        }
+
+                        mostrarMensaje(
+                            resultado.mensaje,
+                            "exito"
+                        );
+
+                        window.setTimeout(() => {
+                            window.location.reload();
+                        }, 700);
+                    } catch (error) {
+                        mostrarMensaje(
+                            error.message,
+                            "error"
+                        );
+
+                        boton.disabled = false;
+                    }
+                });
+            });
+
+        document.querySelectorAll(".boton-eliminar")
+            .forEach(boton => {
+                boton.addEventListener("click", async () => {
+                    const cliente = boton.dataset.cliente;
+
+                    const confirmado = window.confirm(
+                        `¿Deseas eliminar el pedido de ${cliente}?`
+                    );
+
+                    if (!confirmado) {
+                        return;
+                    }
+
+                    boton.disabled = true;
+                    mensajeOperacion.hidden = true;
+
+                    try {
+                        const respuesta = await fetch(
+                            boton.dataset.url,
+                            {
+                                method: "DELETE"
+                            }
+                        );
+
+                        const resultado =
+                            await leerRespuesta(respuesta);
+
+                        if (!respuesta.ok) {
+                            throw new Error(
+                                resultado.error
+                                || "No se pudo eliminar el pedido."
+                            );
+                        }
+
+                        mostrarMensaje(
+                            resultado.mensaje,
+                            "exito"
+                        );
+
+                        window.setTimeout(() => {
+                            window.location.reload();
+                        }, 700);
+                    } catch (error) {
+                        mostrarMensaje(
+                            error.message,
+                            "error"
+                        );
+
+                        boton.disabled = false;
+                    }
+                });
+            });
+    </script>
 </body>
 </html>

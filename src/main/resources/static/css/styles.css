@@ -496,3 +496,209 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Formulario de pedidos */
+
+.acciones-pagina {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.formulario-contenedor {
+    max-width: 850px;
+    padding: 28px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background-color: var(--blanco);
+    box-shadow: 0 6px 20px rgba(35, 75, 59, 0.08);
+}
+
+.formulario-campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-ancho {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    color: var(--verde-oscuro);
+    font-weight: 700;
+}
+
+.campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font: inherit;
+}
+
+.campo input:focus {
+    outline: 2px solid var(--verde-medio);
+    outline-offset: 1px;
+}
+
+.error-campo {
+    color: #a6493c;
+}
+
+.acciones-formulario {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.boton-secundario {
+    display: inline-block;
+    padding: 12px 18px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--verde-oscuro);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .formulario-contenedor {
+        padding: 18px;
+    }
+
+    .formulario-campos {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-ancho {
+        grid-column: auto;
+    }
+
+    .acciones-formulario {
+        flex-wrap: wrap;
+    }
+}
+
+/* Banner principal del inicio */
+
+.presentacion {
+    min-height: 430px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 55px 52px;
+    border-radius: 16px;
+    overflow: hidden;
+    color: var(--blanco);
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(24, 61, 46, 0.96) 0%,
+            rgba(24, 61, 46, 0.88) 30%,
+            rgba(24, 61, 46, 0.55) 52%,
+            rgba(24, 61, 46, 0.10) 75%,
+            rgba(24, 61, 46, 0.03) 100%
+        ),
+        url("/images/home-floristeria.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 10px 30px rgba(25, 56, 43, 0.18);
+}
+
+.presentacion .etiqueta {
+    color: #f7e7b7;
+    background-color: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(4px);
+}
+
+.presentacion h1 {
+    max-width: 520px;
+    margin-bottom: 8px;
+    color: var(--blanco);
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.05;
+}
+
+.presentacion h2 {
+    max-width: 520px;
+    margin: 0 0 16px;
+    color: #f8e5c0;
+    font-size: clamp(20px, 2.4vw, 30px);
+    line-height: 1.25;
+}
+
+.presentacion p {
+    max-width: 500px;
+    margin-bottom: 26px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.presentacion .boton-principal {
+    color: var(--verde-oscuro);
+    background-color: var(--blanco);
+}
+
+.presentacion .boton-principal:hover {
+    color: var(--blanco);
+    background-color: var(--dorado);
+}
+
+/* Ajuste para tabletas */
+
+@media (max-width: 800px) {
+    .presentacion {
+        min-height: 400px;
+        padding: 42px 32px;
+        background-position: 62% center;
+    }
+
+    .presentacion h1,
+    .presentacion h2,
+    .presentacion p {
+        max-width: 75%;
+    }
+}
+
+/* Ajuste para celulares */
+
+@media (max-width: 550px) {
+    .presentacion {
+        min-height: 480px;
+        padding: 32px 24px;
+        justify-content: flex-end;
+        background-image:
+            linear-gradient(
+                180deg,
+                rgba(24, 61, 46, 0.20) 0%,
+                rgba(24, 61, 46, 0.70) 45%,
+                rgba(24, 61, 46, 0.97) 100%
+            ),
+            url("/images/home-floristeria.png");
+        background-position: 68% center;
+    }
+
+    .presentacion h1,
+    .presentacion h2,
+    .presentacion p {
+        max-width: 100%;
+    }
+
+    .presentacion h1 {
+        font-size: 38px;
+    }
+}
