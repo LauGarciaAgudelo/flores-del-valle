@@ -1,5 +1,6 @@
 package com.floresdelvalle.floresdelvalle.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,15 +9,49 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "arreglos")
+@Schema(
+    name = "Arreglo",
+    description = """
+        Arreglo floral disponible en el catálogo,
+        con sus tres opciones de precio.
+        """
+)
 public class Arreglo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(
+        description = "Identificador único del arreglo.",
+        example = "1",
+        accessMode = Schema.AccessMode.READ_ONLY
+    )
     private Long id;
 
+    @Schema(
+        description = "Nombre comercial del arreglo.",
+        example = "Ramo de rosas"
+    )
     private String nombre;
+
+    @Schema(
+        description = "Precio de la presentación básica.",
+        example = "75000",
+        minimum = "1"
+    )
     private Integer precioBasico;
+
+    @Schema(
+        description = "Precio de la presentación especial.",
+        example = "95000",
+        minimum = "1"
+    )
     private Integer precioEspecial;
+
+    @Schema(
+        description = "Precio de la presentación premium.",
+        example = "125000",
+        minimum = "1"
+    )
     private Integer precioPremium;
 
     public Arreglo() {
@@ -72,10 +107,10 @@ public class Arreglo {
 
     public boolean incluyePrecio(Integer precio) {
         return precio != null
-                && (
-                    precio.equals(precioBasico)
-                    || precio.equals(precioEspecial)
-                    || precio.equals(precioPremium)
-                );
+            && (
+                precio.equals(precioBasico)
+                || precio.equals(precioEspecial)
+                || precio.equals(precioPremium)
+            );
     }
 }
